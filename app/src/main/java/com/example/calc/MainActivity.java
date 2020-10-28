@@ -2,12 +2,15 @@ package com.example.calc;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.util.Log;
 import android.widget.Toast;
+
+import static java.lang.Integer.*;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     private Button one;
@@ -21,10 +24,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button nine;
     private Button zero;
     private Button add;
-//    private Button sub;
-//    private Button mul;
-//    private Button div;
-//    private Button dec;
+    private Button sub;
+    private Button mul;
+    private Button div;
+    private Button dec;
     private TextView info;
     private TextView result;
     private String str;
@@ -48,11 +51,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         nine.setOnClickListener(this);
         add.setOnClickListener(this);
         result.setOnClickListener(this);
-
-
+        sub.setOnClickListener(this);
+        mul.setOnClickListener(this);
+        div.setOnClickListener(this);
+        dec.setOnClickListener(this);
+        
     }
 
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onClick(View v){
         switch(v.getId()){
@@ -98,13 +105,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 info.append("9");
                 break;
             case R.id.add:
-
-                ans = ans + Integer.parseInt(str);
-                Log.d("check",Integer.toString(ans));
+                ans = ans + parseInt(str);
+//                Log.d("check",Integer.toString(ans));
                 result.setText(Integer.toString(ans));
-                info.setText("");
+                info.append("+");
                 str = "";
                 break;
+            case R.id.subtract:
+                ans = ans - parseInt(str);
+                result.setText(Integer.toString(ans));
+                info.append("-");
+                str = ""; 
+                break;
+            case R.id.multiply:
+                ans = ans * parseInt(str);
+                result.setText(Integer.toString(ans));
+                info.append("*");
+                str = "";
+                break;
+            case R.id.divide:
+                ans = ans / parseInt(str);
+                result.setText(Integer.toString(ans));
+                info.append("/");
+                str = "";
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + v.getId());
         }
     }
 
@@ -120,10 +146,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         nine = (Button)findViewById(R.id.nine);
         zero = (Button)findViewById(R.id.zero);
         add = (Button)findViewById(R.id.add);
-//        sub = (Button)findViewById(R.id.subtract);
-//        div = (Button)findViewById(R.id.divide);
-//        mul = (Button)findViewById(R.id.multiply);
-//        dec = (Button)findViewById(R.id.decimal);
+        sub = (Button)findViewById(R.id.subtract);
+        div = (Button)findViewById(R.id.divide);
+        mul = (Button)findViewById(R.id.multiply);
+        dec = (Button)findViewById(R.id.decimal);
         info = (TextView) findViewById(R.id.cal);
         result = (TextView) findViewById(R.id.result);
         str = "";
